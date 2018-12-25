@@ -78,17 +78,24 @@ app.get('*', function (req, res) {
 const client = new ModbusRTU();
 // open connection to a serial port
 //client.connectRTU("/dev/ttyUSB0", { baudRate: 19200 }, ()=> {
-client.connectRTUBuffered("/dev/ttyUSB0", { baudRate: 19200 }, ()=> {
-
+/*client.connectRTUBuffered("/dev/ttyUSB0", { baudRate: 19200 }, ()=> {
 	// start get value
 	console.log('modbus connected ' + client.isOpen);
 	if(client.isOpen) getSlavesValue(slavesIdList);
-});
+});*/
+client.connectTCP("87.255.213.153", { port: 5002 });
+
+setInterval(function() {
+    client.readHoldingRegisters(0, 10, function(err, data) {
+        console.log(data.data);
+    });
+}, 5000);
+
 // set timeout, if slave did not reply back
 client.setTimeout(1000);
 
 // list of meter's id
-const slaveRegLength = [19, 7, 5, 4, 4, 7];
+/*const slaveRegLength = [19, 7, 5, 4, 4, 7];
 const slavesIdList = [1, 2, 3, 4, 5, 6];
 
 var start = 0;
@@ -198,7 +205,7 @@ const setFirstReg = async (id) => {
         
         console.log(e)
     }
-}
+}*/
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
