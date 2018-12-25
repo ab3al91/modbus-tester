@@ -82,7 +82,7 @@ client.connectRTUBuffered("/dev/ttyUSB0", { baudRate: 19200 }, ()=> {
 
 	// start get value
 	console.log('modbus connected ' + client.isOpen);
-	getSlavesValue(slavesIdList);
+	if(client.isOpen) getSlavesValue(slavesIdList);
 });
 // set timeout, if slave did not reply back
 client.setTimeout(1000);
