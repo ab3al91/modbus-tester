@@ -89,7 +89,7 @@ client.connectTCP("87.255.213.153", { port: 5002 }, ()=> {
 	//if(client.isOpen) getSlavesValue(slavesIdList);
 	if(client.isOpen) {
 		setInterval(function() {
-			client.readHoldingRegisters(0, 1, function(err, data) {
+			client.readHoldingRegisters(0, 5, function(err, data) {
 			console.log(data.data);
 			});
 		}, 5000);
