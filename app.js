@@ -3,7 +3,7 @@ const expressws = require('express-ws');
 const ModbusRTU = require("modbus-serial");
 const app = express()
 let ws = expressws(app);
-const port = 80
+var port = process.env.PORT || 3000;
 
 app.use(express.static('public'));
 
