@@ -83,13 +83,20 @@ const client = new ModbusRTU();
 	console.log('modbus connected ' + client.isOpen);
 	if(client.isOpen) getSlavesValue(slavesIdList);
 });*/
-client.connectTCP("87.255.213.153", { port: 5002 });
+client.connectTCP("87.255.213.153", { port: 5002 }, ()=> {
+	// start get value
+	console.log('modbus connected ' + client.isOpen);
+	//if(client.isOpen) getSlavesValue(slavesIdList);
+	if(client.isOpen) {
+		setInterval(function() {
+			client.readHoldingRegisters(0, 1, function(err, data) {
+			console.log(data.data);
+			});
+		}, 5000);
+	}
+});
 
-setInterval(function() {
-    client.readHoldingRegisters(0, 10, function(err, data) {
-        console.log(data.data);
-    });
-}, 5000);
+
 
 // set timeout, if slave did not reply back
 client.setTimeout(1000);
