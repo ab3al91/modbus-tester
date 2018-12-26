@@ -92,7 +92,7 @@ client.connectTCP("87.255.213.153", { port: 5002 }, ()=> {
 			client.readHoldingRegisters(0, 5, function(err, data) {
 			console.log(data.data);
 			});
-		}, 5000);
+		}, 4000);
 	}
 });
 
