@@ -123,8 +123,6 @@ app.post('/toggle', function (req, res) {
 	}
 })
 
-
-
 function readVals() {
 
 	// console.log(client.isOpen,clientParam);
