@@ -6,11 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "babel-watch app.js",
-    "start": "node app.js"
+    "start": "node app.js",
+    "push": "rm -rf ./../docs && cp -r ./dist ./../docs && git acp"
   },
   "author": "ab3al",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-ws": "^4.0.0",
     "modbus-serial": "^7.4.2"
