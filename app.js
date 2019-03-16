@@ -127,7 +127,7 @@ app.post('/toggle', function (req, res) {
 
 			client.connectTcpRTUBuffered(clientParam.ip, { port: Number(clientParam.port) }).then(()=> {
 				// start get value
-				console.log('modbusTCP connected ' + client.isOpen,clientParam);
+				console.log('modbusRTUoverTCP connected ' + client.isOpen,clientParam);
 				//if(client.isOpen) getSlavesValue(slavesIdList);
 				if(client.isOpen) {
 					readVals(client);
@@ -144,14 +144,14 @@ app.post('/toggle', function (req, res) {
 	}
 })
 
-function readVals() {
+const readVals = async() => {
 
 	// console.log(client.isOpen,clientParam);
 
 	if(client.isOpen){
 		if(clientParam.type == '2'){
 			//client.setID(clientParam.slaveId)
-			client.setID(4)
+			await client.setID(4)
 			console.log("clent id "+clientParam.slaveId)
 		}
 
