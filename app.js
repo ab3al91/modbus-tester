@@ -105,7 +105,7 @@ app.post('/toggle', function (req, res) {
 		res.send(JSON.stringify({isOpen:false}));
 	} else {
 
-		if(clientParam.type == 1){
+		if(clientParam.type == '1'){
 		
 			client.connectTCP(clientParam.ip, { port: Number(clientParam.port) }).then(()=> {
 				// start get value
@@ -123,7 +123,7 @@ app.post('/toggle', function (req, res) {
 		    });
 
 
-		} else if(clientParam.type == 2){
+		} else if(clientParam.type == '2'){
 
 			client.connectTcpRTUBuffered(clientParam.ip, { port: Number(clientParam.port) }).then(()=> {
 				// start get value
@@ -149,8 +149,9 @@ function readVals() {
 	// console.log(client.isOpen,clientParam);
 
 	if(client.isOpen){
-		if(clientParam.type == 2){
-			client.setID(clientParam.slaveId)
+		if(clientParam.type == '2'){
+			//client.setID(clientParam.slaveId)
+			client.setID(4)
 			//console.log("clent id "+clientParam.slaveId)
 		}
 
