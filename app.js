@@ -150,9 +150,9 @@ const readVals = async() => {
 
 	if(client.isOpen){
 		if(clientParam.type == '2'){
-			//client.setID(clientParam.slaveId)
-			await client.setID(4)
-			console.log("clent id "+clientParam.slaveId)
+			await client.setID(Number(clientParam.slaveId))
+			// await client.setID(4)
+			//console.log("clent id "+clientParam.slaveId)
 		}
 
 		client.readHoldingRegisters(Number(clientParam.startReg), Number(clientParam.lastReg)).then((d)=>{
