@@ -150,13 +150,16 @@ function readVals() {
 
 	if(client.isOpen){
 		if(clientParam.type == 2){
-			client.setID(client.slaveId)
+			client.setID(clientParam.slaveId)
+			//console.log("clent id "+clientParam.slaveId)
 		}
+
 		client.readHoldingRegisters(Number(clientParam.startReg), Number(clientParam.lastReg)).then((d)=>{
 			console.log(d.data);
 			brodcast(d.data);
 		}).catch((err)=>{
 			console.log(err);
+			brodcast({error:err});
 		});
 	}
  }
