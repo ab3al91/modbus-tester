@@ -125,7 +125,7 @@ app.post('/toggle', function (req, res) {
 
 		} else if(clientParam.type == '2'){
 
-			client.connectTcpRTUBuffered(clientParam.ip, { port: Number(clientParam.port) }).then(()=> {
+			client.connectTelnet(clientParam.ip, { port: Number(clientParam.port) }).then(()=> {
 				// start get value
 				console.log('modbusRTUoverTCP connected ' + client.isOpen,clientParam);
 				//if(client.isOpen) getSlavesValue(slavesIdList);
