@@ -152,7 +152,7 @@ function readVals() {
 		if(clientParam.type == '2'){
 			//client.setID(clientParam.slaveId)
 			client.setID(4)
-			//console.log("clent id "+clientParam.slaveId)
+			console.log("clent id "+clientParam.slaveId)
 		}
 
 		client.readHoldingRegisters(Number(clientParam.startReg), Number(clientParam.lastReg)).then((d)=>{
