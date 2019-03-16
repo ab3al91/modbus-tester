@@ -58,13 +58,13 @@ app.use(function (req, res, next) {
 var interval;
 var clientParam={
 	ip:"87.255.213.153",
-	port:5002,
+	port:500,
 	startReg:0,
 	lastReg:0,
 	type:1,
 	parity:0,
 	baudRate:0,
-	slaveId:0
+	slaveId:1
 };
 var client = new ModbusRTU();
 // set timeout, if slave did not reply back
@@ -103,23 +103,44 @@ app.post('/toggle', function (req, res) {
 		client.close();
 		clearInterval(interval);
 		res.send(JSON.stringify({isOpen:false}));
-	}
-	else{
-		
-		client.connectTCP(clientParam.ip, { port: Number(clientParam.port) }).then(()=> {
-			// start get value
-			console.log('modbusTCP connected ' + client.isOpen,clientParam);
-			//if(client.isOpen) getSlavesValue(slavesIdList);
-			if(client.isOpen) {
-				readVals(client);
-				interval = setInterval(readVals, 5000);
-			}
+	} else {
 
-			res.send(JSON.stringify({isOpen:client.isOpen}));
-		}).catch(function(e) {
-	        console.log(e.message);
-	        res.send(JSON.stringify({isOpen:client.isOpen,error:e.message}));
-	    });
+		if(clientParam.type == 1){
+		
+			client.connectTCP(clientParam.ip, { port: Number(clientParam.port) }).then(()=> {
+				// start get value
+				console.log('modbusTCP connected ' + client.isOpen,clientParam);
+				//if(client.isOpen) getSlavesValue(slavesIdList);
+				if(client.isOpen) {
+					readVals(client);
+					interval = setInterval(readVals, 5000);
+				}
+
+				res.send(JSON.stringify({isOpen:client.isOpen}));
+			}).catch(function(e) {
+		        console.log(e.message);
+		        res.send(JSON.stringify({isOpen:client.isOpen,error:e.message}));
+		    });
+
+
+		} else if(clientParam.type == 2){
+
+			client.connectTcpRTUBuffered(clientParam.ip, { port: Number(clientParam.port) }).then(()=> {
+				// start get value
+				console.log('modbusTCP connected ' + client.isOpen,clientParam);
+				//if(client.isOpen) getSlavesValue(slavesIdList);
+				if(client.isOpen) {
+					readVals(client);
+					interval = setInterval(readVals, 5000);
+				}
+
+				res.send(JSON.stringify({isOpen:client.isOpen}));
+			}).catch(function(e) {
+		        console.log(e.message);
+		        res.send(JSON.stringify({isOpen:client.isOpen,error:e.message}));
+		    });
+
+		}
 	}
 })
 
@@ -128,6 +149,9 @@ function readVals() {
 	// console.log(client.isOpen,clientParam);
 
 	if(client.isOpen){
+		if(clientParam.type == 2){
+			client.setID(client.slaveId)
+		}
 		client.readHoldingRegisters(Number(clientParam.startReg), Number(clientParam.lastReg)).then((d)=>{
 			console.log(d.data);
 			brodcast(d.data);
